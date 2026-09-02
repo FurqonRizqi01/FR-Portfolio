@@ -21,7 +21,7 @@ export function signatureAnimation(scope: HTMLElement) {
     });
 
     timeline.from(
-      ".signature h2",
+      ".signature__logo",
       {
         scale: 0.8,
         opacity: 0,

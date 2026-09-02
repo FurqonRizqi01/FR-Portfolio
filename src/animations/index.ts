@@ -7,6 +7,7 @@ export { technologiesAnimation } from "./technologies";
 export { credentialsAnimation } from "./credentials";
 export { signatureAnimation } from "./signature";
 export {
+  destroyPreview,
   hidePreview,
   movePreview,
   showPreview,

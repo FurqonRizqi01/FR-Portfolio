@@ -4,6 +4,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 export function profileAnimation(scope: HTMLElement) {
+  const isMobile = window.matchMedia("(max-width: 900px)").matches;
+
   const context = gsap.context(() => {
     const content = scope.querySelector(".profile__hero");
 
@@ -12,10 +14,8 @@ export function profileAnimation(scope: HTMLElement) {
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: content,
-        start: "top 85%",
-        end: "top 30%",
-        scrub: 1.2,
-        invalidateOnRefresh: true,
+        start: "top 72%",
+        once: true,
       },
     });
 
@@ -47,9 +47,10 @@ export function profileAnimation(scope: HTMLElement) {
     timeline.from(
       ".profile__photo img",
       {
-        x: 80,
+        x: isMobile ? 0 : 80,
+        y: isMobile ? 32 : 0,
         opacity: 0,
-        scale: 1.04,
+        scale: isMobile ? 1.02 : 1.04,
         duration: 1,
         ease: "power3.out",
       },

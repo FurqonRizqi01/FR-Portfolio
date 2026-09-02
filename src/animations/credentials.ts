@@ -9,12 +9,7 @@ export function credentialsAnimation(scope: HTMLElement) {
 
     if (!grid) return;
 
-    gsap.from(".credentials__block", {
-      y: 80,
-      opacity: 0,
-      stagger: 0.2,
-      duration: 1,
-      ease: "power3.out",
+    const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: scope,
         start: "top 75%",
@@ -22,18 +17,25 @@ export function credentialsAnimation(scope: HTMLElement) {
       },
     });
 
-    gsap.from(".credential-item", {
-      x: -40,
+    timeline.from(".credentials__block", {
+      y: 80,
       opacity: 0,
-      stagger: 0.1,
-      duration: 0.7,
+      stagger: 0.2,
+      duration: 1,
       ease: "power3.out",
-      scrollTrigger: {
-        trigger: grid,
-        start: "top 65%",
-        once: true,
-      },
     });
+
+    timeline.from(
+      ".credential-item",
+      {
+        x: -40,
+        opacity: 0,
+        stagger: 0.08,
+        duration: 0.7,
+        ease: "power3.out",
+      },
+      "-=0.45"
+    );
   }, scope);
 
   return () => context.revert();

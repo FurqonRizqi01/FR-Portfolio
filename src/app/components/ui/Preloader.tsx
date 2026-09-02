@@ -3,6 +3,8 @@
 import { useLayoutEffect, useRef } from "react";
 import gsap from "gsap";
 
+const PRELOADER_SESSION_KEY = "fr:preloader-seen";
+
 export default function Preloader() {
   const loaderRef = useRef<HTMLDivElement>(null);
   const numberRef = useRef<HTMLSpanElement>(null);
@@ -20,6 +22,19 @@ export default function Preloader() {
       "(prefers-reduced-motion: reduce)"
     ).matches;
 
+    try {
+      if (sessionStorage.getItem(PRELOADER_SESSION_KEY) === "true") {
+        root.classList.remove("is-loading");
+        gsap.set(loader, { display: "none" });
+        requestAnimationFrame(() => {
+          window.dispatchEvent(new Event("fr:loaded"));
+        });
+        return;
+      }
+    } catch {
+      // Continue normally when storage is unavailable.
+    }
+
     root.classList.add("is-loading");
 
     const context = gsap.context(() => {
@@ -27,8 +42,15 @@ export default function Preloader() {
 
       const timeline = gsap.timeline({
         onComplete: () => {
+          try {
+            sessionStorage.setItem(PRELOADER_SESSION_KEY, "true");
+          } catch {
+            // Storage can be unavailable in restrictive browser modes.
+          }
+
           root.classList.remove("is-loading");
           gsap.set(loader, { display: "none" });
+          window.dispatchEvent(new Event("fr:loaded"));
         },
       });
 
@@ -63,10 +85,6 @@ export default function Preloader() {
         },
         reducedMotion ? 0.05 : 0.2
       );
-
-      timeline.call(() => {
-        window.dispatchEvent(new Event("fr:loaded"));
-      });
 
       timeline.to(
         loader,

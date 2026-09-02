@@ -20,8 +20,29 @@ export async function generateMetadata({
   if (!project) return {};
 
   return {
-    title: `${project.title} | Muhammad Furqon Rizqi`,
+    title: project.title,
     description: project.description,
+    alternates: {
+      canonical: `/projects/${project.slug}`,
+    },
+    openGraph: {
+      title: project.title,
+      description: project.description,
+      url: `/projects/${project.slug}`,
+      type: "website",
+      images: [
+        {
+          url: project.image,
+          alt: `${project.title} project preview`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: project.title,
+      description: project.description,
+      images: [project.image],
+    },
   };
 }
 

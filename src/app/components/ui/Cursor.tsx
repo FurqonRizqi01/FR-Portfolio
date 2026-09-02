@@ -28,15 +28,20 @@ export default function Cursor() {
       duration: 0.4,
       ease: "power3.out",
     });
+    let isVisible = false;
 
     function handlePointerMove(event: PointerEvent) {
       moveX(event.clientX);
       moveY(event.clientY);
-      gsap.to(cursor, {
-        autoAlpha: 1,
-        duration: 0.2,
-        overwrite: "auto",
-      });
+
+      if (!isVisible) {
+        isVisible = true;
+        gsap.to(cursor, {
+          autoAlpha: 1,
+          duration: 0.2,
+          overwrite: "auto",
+        });
+      }
     }
 
     function handlePointerOver(event: PointerEvent) {
@@ -64,6 +69,9 @@ export default function Cursor() {
     }
 
     function hideCursor() {
+      if (!isVisible) return;
+
+      isVisible = false;
       gsap.to(cursor, {
         autoAlpha: 0,
         duration: 0.2,

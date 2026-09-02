@@ -1,6 +1,7 @@
 "use client";
 
 import { useLayoutEffect, useRef } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { heroAnimation, heroScrollAnimation } from "@/animations";
 
 export default function Hero() {
@@ -11,29 +12,32 @@ export default function Hero() {
 
     const hero = heroRef.current;
     let cleanUpIntro: (() => void) | undefined;
+    let cleanUpScroll: (() => void) | undefined;
+    let refreshFrame = 0;
     let hasStarted = false;
 
-    const startIntro = () => {
+    const startAnimations = () => {
       if (hasStarted) return;
 
       hasStarted = true;
       cleanUpIntro = heroAnimation(hero);
+      cleanUpScroll = heroScrollAnimation(hero);
+      refreshFrame = requestAnimationFrame(() => ScrollTrigger.refresh());
     };
 
     const bootAlreadyFinished =
       !document.documentElement.classList.contains("is-loading");
 
     if (bootAlreadyFinished) {
-      startIntro();
+      startAnimations();
     } else {
-      window.addEventListener("fr:loaded", startIntro, { once: true });
+      window.addEventListener("fr:loaded", startAnimations, { once: true });
     }
 
-    const cleanUpScroll = heroScrollAnimation(heroRef.current);
-
     return () => {
-      window.removeEventListener("fr:loaded", startIntro);
-      cleanUpScroll();
+      window.removeEventListener("fr:loaded", startAnimations);
+      cancelAnimationFrame(refreshFrame);
+      cleanUpScroll?.();
       cleanUpIntro?.();
     };
   }, []);

@@ -1,8 +1,10 @@
 "use client";
+import Image from "next/image";
 import Link from "next/link";
 import { projects } from "@/data/projects";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import {
+  destroyPreview,
   hidePreview,
   movePreview,
   projectsAnimation,
@@ -17,16 +19,17 @@ export default function Projects() {
   >(null);
 
   useLayoutEffect(() => {
-    if (!projectsRef.current) return;
+    const projectsElement = projectsRef.current;
+    const previewElement = previewRef.current;
 
-    return projectsAnimation(projectsRef.current);
-  }, []);
+    if (!projectsElement) return;
 
-  useEffect(() => {
-    projects.forEach((project) => {
-      const image = new window.Image();
-      image.src = project.image;
-    });
+    const cleanUpAnimation = projectsAnimation(projectsElement);
+
+    return () => {
+      cleanUpAnimation();
+      if (previewElement) destroyPreview(previewElement);
+    };
   }, []);
 
   return (
@@ -111,13 +114,18 @@ export default function Projects() {
         className={`project-preview project-preview--${
           activeProject?.preview ?? "desktop"
         }`}
-        style={{
-          backgroundImage: activeProject
-            ? `url("${activeProject.image}")`
-            : "none",
-        }}
         aria-hidden="true"
-      />
+      >
+        {activeProject && (
+          <Image
+            key={activeProject.slug}
+            src={activeProject.image}
+            alt=""
+            fill
+            sizes={activeProject.preview === "mobile" ? "200px" : "360px"}
+          />
+        )}
+      </div>
     </section>
   );
 }

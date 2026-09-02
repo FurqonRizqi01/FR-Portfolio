@@ -125,9 +125,19 @@ html.is-loading body {
   }
 
   &__logo {
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: -0.04em;
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transform: scale(2.2);
+      filter: brightness(0) invert(1);
+    }
   }
 
   &__nav {
@@ -235,6 +245,7 @@ html.is-loading body {
 
   &__line {
     display: block;
+    will-change: transform;
   }
 
   &__statement-line {
@@ -266,6 +277,7 @@ html.is-loading body {
 
   text-transform: uppercase;
   opacity: 0.6;
+  will-change: transform, opacity;
 }
 }
 
@@ -441,6 +453,11 @@ html.is-loading body {
   visibility: hidden;
   will-change: transform, opacity;
   pointer-events: none;
+
+  img {
+    object-fit: cover;
+  }
+
   mix-blend-mode: difference;
 
   transition:
@@ -983,18 +1000,16 @@ html.is-loading body {
   background: #080808;
   color: #fff;
 
-  &::before {
-    content: "";
+  &__background {
     position: absolute;
     inset: 0;
     z-index: -2;
-    background-color: #080808;
-    background-image: url("/images/profile/banners.png");
-    // Shift the subject toward the right while keeping the head inside the
-    // frame and the background covering the full banner width.
-    background-position: left top;
-    background-size: 125% auto;
-    background-repeat: no-repeat;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transform: scale(1.25);
+    transform-origin: left top;
     filter: grayscale(100%);
   }
 
@@ -1020,13 +1035,21 @@ html.is-loading body {
     text-transform: uppercase;
   }
 
-  h2 {
-    margin: 18px 0 0;
-    font-family: var(--font-display);
-    font-size: clamp(100px, 12vw, 180px);
-    font-weight: 700;
-    line-height: 0.65;
-    letter-spacing: -0.06em;
+  &__logo {
+    display: grid;
+    place-items: center;
+    width: clamp(170px, 15vw, 230px);
+    height: clamp(170px, 15vw, 230px);
+    margin: 8px auto -10px;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transform: scale(2.2);
+      filter: brightness(0) invert(1);
+    }
   }
 
   &__name {
@@ -1107,11 +1130,16 @@ html.is-loading body {
   }
 
   &__brand {
-    span {
-      font-size: clamp(90px, 14vw, 220px);
-      line-height: 0.75;
-      font-weight: 700;
-      letter-spacing: -0.065em;
+    width: clamp(110px, 12vw, 180px);
+    height: clamp(110px, 12vw, 180px);
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      transform: scale(2.2);
+      filter: brightness(0) invert(1);
     }
   }
 
@@ -1414,9 +1442,9 @@ html.is-loading body {
   }
 
   .signature {
-    &::before {
-      background-position: 20% top;
-      background-size: auto 100%;
+    &__background {
+      object-position: 20% top;
+      transform: none;
     }
   }
 
@@ -1569,14 +1597,33 @@ html.is-loading body {
     }
 
     &__background-text {
-      top: 48%;
-      left: -12%;
-      font-size: 48vw;
+      position: relative;
+      top: auto;
+      left: auto;
+      grid-column: 1;
+      grid-row: 2;
+      align-self: start;
+      z-index: 0;
+      width: 100%;
+      margin-top: 16px;
+      font-size: 27vw;
+      text-align: center;
+      transform: none;
     }
 
     &__photo {
-      width: min(145vw, 680px);
-      height: 580px;
+      grid-column: 1;
+      grid-row: 2;
+      z-index: 1;
+      width: min(100%, 420px);
+      height: min(105vw, 420px);
+      margin-top: 20px;
+
+      img {
+        left: 50%;
+        width: 125%;
+        transform: translateX(-50%);
+      }
     }
 
     &__details {
@@ -1688,18 +1735,19 @@ html.is-loading body {
     min-height: 420px;
     height: 460px;
 
-    &::before {
-      background-position: 42% top;
-      background-size: auto 100%;
+    &__background {
+      object-position: 42% top;
+      transform: none;
     }
 
     &__content {
       width: calc(100% - 32px);
     }
 
-    h2 {
-      margin-top: 20px;
-      font-size: clamp(96px, 30vw, 140px);
+    &__logo {
+      width: clamp(150px, 44vw, 190px);
+      height: clamp(150px, 44vw, 190px);
+      margin-top: 8px;
     }
 
     &__name {

@@ -19,6 +19,14 @@ export default function SmoothScroll() {
       duration: 1.2,
       smoothWheel: true,
       respectReducedMotion: false,
+      anchors: {
+        duration: 1.6,
+        easing: (time) =>
+          time < 0.5
+            ? 4 * time * time * time
+            : 1 - Math.pow(-2 * time + 2, 3) / 2,
+        lock: true,
+      },
     });
 
     activeLenis = lenis;

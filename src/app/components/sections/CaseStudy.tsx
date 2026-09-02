@@ -56,7 +56,6 @@ export default function CaseStudy({ project }: CaseStudyProps) {
                 ? "(max-width: 640px) 80vw, 440px"
                 : "(max-width: 900px) 100vw, 1360px"
             }
-            priority
           />
         </div>
       </section>
