@@ -72,14 +72,6 @@ export default function Hero() {
 
             <div className="hero__role">
                 <span className="hero__role-item">
-                    Software Engineer
-                </span>
-
-                <span className="hero__role-divider">
-                    /
-                </span>
-
-                <span className="hero__role-item">
                     Full-Stack Developer
                 </span>
             </div>

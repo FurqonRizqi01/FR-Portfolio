@@ -44,7 +44,7 @@ export const metadata: Metadata = {
 
   title: {
     default:
-      "Muhammad Furqon Rizqi | Software Engineer & Full Stack Developer",
+      "Muhammad Furqon Rizqi | Full-Stack Developer",
 
     template:
       "%s | Muhammad Furqon Rizqi",
@@ -52,13 +52,12 @@ export const metadata: Metadata = {
 
 
   description:
-    "Official portfolio of Muhammad Furqon Rizqi, Software Engineer and Full Stack Developer specializing in React, Next.js, Laravel, Golang, and modern web applications.",
+    "Official portfolio of Muhammad Furqon Rizqi, a Full-Stack Developer specializing in React, Next.js, Laravel, Golang, and modern web applications.",
 
 
   keywords: [
     "Muhammad Furqon Rizqi",
     "Furqon Rizqi",
-    "Software Engineer",
     "Full Stack Developer",
     "Frontend Developer",
     "Backend Developer",
@@ -130,7 +129,7 @@ export const metadata: Metadata = {
       SITE_URL,
 
     title:
-      "Muhammad Furqon Rizqi | Software Engineer & Full Stack Developer",
+      "Muhammad Furqon Rizqi | Full-Stack Developer",
 
     description:
       "Portfolio of Muhammad Furqon Rizqi showcasing modern web applications, software engineering projects, and technical experience.",
@@ -173,7 +172,7 @@ export const metadata: Metadata = {
       "summary_large_image",
 
     title:
-      "Muhammad Furqon Rizqi | Software Engineer",
+      "Muhammad Furqon Rizqi | Full-Stack Developer",
 
     description:
       "Full Stack Developer portfolio showcasing React, Next.js, Laravel, and Golang projects.",
@@ -219,11 +218,11 @@ export default function RootLayout({
 
 
     jobTitle:
-      "Software Engineer",
+      "Full-Stack Developer",
 
 
     description:
-      "Software Engineer and Full Stack Developer building modern frontend, backend, and scalable web applications.",
+      "Full-Stack Developer building modern frontend, backend, and scalable web applications.",
 
 
     url:
@@ -240,7 +239,7 @@ export default function RootLayout({
         "Organization",
 
       name:
-        "Independent Software Engineer",
+        "Independent Full-Stack Developer",
 
     },
 

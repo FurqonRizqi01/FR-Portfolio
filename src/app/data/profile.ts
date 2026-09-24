@@ -1,11 +1,11 @@
 export const profile = {
   name: "Muhammad Furqon Rizqi",
-  role: ["Software Engineer", "Full-Stack Developer"],
+  role: ["Full-Stack Developer"],
   description:
     "I build reliable and scalable web applications from interface to backend. Focused on clean code, performance, and real user problems.",
   details: [
     { label: "Name", value: "Muhammad Furqon Rizqi" },
-    { label: "Role", value: "Software Engineer" },
+    { label: "Role", value: "Full-Stack Developer" },
     { label: "Focus", value: "Web Development" },
     { label: "Location", value: "Indonesia" },
     { label: "Experience", value: "Web / Backend / Mobile" },

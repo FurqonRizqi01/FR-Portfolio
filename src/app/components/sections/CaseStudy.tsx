@@ -32,7 +32,37 @@ export default function CaseStudy({ project }: CaseStudyProps) {
           <h1>{project.title}</h1>
 
           <div className="case-study__intro">
-            <p>{project.description}</p>
+            <div>
+              <p>{project.description}</p>
+
+              {(project.githubUrl || project.liveUrl) && (
+                <div className="case-study__links" aria-label="Project links">
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      data-cursor="OPEN"
+                    >
+                      <span>Live project</span>
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+
+                  {project.githubUrl && (
+                    <a
+                      href={project.githubUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      data-cursor="OPEN"
+                    >
+                      <span>GitHub</span>
+                      <span aria-hidden="true">↗</span>
+                    </a>
+                  )}
+                </div>
+              )}
+            </div>
 
             <div className="case-study__facts">
               <span>{project.category}</span>

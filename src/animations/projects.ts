@@ -7,7 +7,8 @@ gsap.registerPlugin(ScrollTrigger);
 export function projectsAnimation(scope: HTMLElement) {
   const context = gsap.context(() => {
     const header = scope.querySelector(".projects__header");
-    const rows = scope.querySelectorAll(".project-row");
+    const cards = scope.querySelectorAll(".project-card");
+    const footer = scope.querySelector(".projects__footer");
     const timeline = gsap.timeline({
       scrollTrigger: {
         trigger: scope,
@@ -26,20 +27,33 @@ export function projectsAnimation(scope: HTMLElement) {
       });
     }
 
-    if (rows.length) {
+    if (cards.length) {
       timeline.from(
-        rows,
+        cards,
         {
-        y: 80,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 1,
-        ease: "power3.out",
-        onComplete: () => {
-          gsap.set(rows, { clearProps: "transform,opacity" });
-        },
+          y: 80,
+          opacity: 0,
+          stagger: 0.12,
+          duration: 1,
+          ease: "power3.out",
+          onComplete: () => {
+            gsap.set(cards, { clearProps: "transform,opacity" });
+          },
         },
         "-=0.35"
+      );
+    }
+
+    if (footer) {
+      timeline.from(
+        footer,
+        {
+          y: 30,
+          opacity: 0,
+          duration: 0.7,
+          ease: "power3.out",
+        },
+        "-=0.55"
       );
     }
   }, scope);

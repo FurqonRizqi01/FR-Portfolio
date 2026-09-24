@@ -1,130 +1,99 @@
 "use client";
-import Image from "next/image";
 import Link from "next/link";
+import ProjectCard from "@/components/projects/ProjectCard";
 import { projects } from "@/data/projects";
-import { useLayoutEffect, useRef, useState } from "react";
-import {
-  destroyPreview,
-  hidePreview,
-  movePreview,
-  projectsAnimation,
-  showPreview,
-} from "@/animations";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { projectsAnimation } from "@/animations";
+
+const DAILY_PROJECT_LIMIT = 4;
+
+function getDailyProjects(date: Date) {
+  const [primaryProject, ...rotatingProjects] = projects;
+  const dayKey = new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Jakarta",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).format(date);
+  let seed = Number(dayKey.replaceAll("-", ""));
+
+  for (let index = rotatingProjects.length - 1; index > 0; index -= 1) {
+    seed = (seed * 9301 + 49297) % 233280;
+    const target = Math.floor((seed / 233280) * (index + 1));
+    [rotatingProjects[index], rotatingProjects[target]] = [
+      rotatingProjects[target],
+      rotatingProjects[index],
+    ];
+  }
+
+  return [primaryProject, ...rotatingProjects].slice(0, DAILY_PROJECT_LIMIT);
+}
 
 export default function Projects() {
   const projectsRef = useRef<HTMLElement>(null);
-  const previewRef = useRef<HTMLDivElement>(null);
-  const [activeProject, setActiveProject] = useState<
-    (typeof projects)[number] | null
-  >(null);
+  const [selectedProjects, setSelectedProjects] = useState(() =>
+    projects.slice(0, DAILY_PROJECT_LIMIT)
+  );
+
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      setSelectedProjects(getDailyProjects(new Date()));
+    });
+
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   useLayoutEffect(() => {
     const projectsElement = projectsRef.current;
-    const previewElement = previewRef.current;
 
     if (!projectsElement) return;
 
-    const cleanUpAnimation = projectsAnimation(projectsElement);
-
-    return () => {
-      cleanUpAnimation();
-      if (previewElement) destroyPreview(previewElement);
-    };
+    return projectsAnimation(projectsElement);
   }, []);
 
   return (
-    <section
-      className="projects"
-      id="projects"
-      ref={projectsRef}
-      onMouseMove={(event) => {
-        if (previewRef.current) {
-          movePreview(
-            previewRef.current,
-            event.clientX + 50,
-            event.clientY + 80
-          );
-        }
-      }}
-    >
+    <section className="projects" id="projects" ref={projectsRef}>
       <div className="container">
         <div className="projects__header">
           <span className="projects__label">Selected Work / 02</span>
 
-          <h2>
-            Selected
-            <br />
-            Projects
-          </h2>
+          <h2>Selected Projects</h2>
 
           <span className="projects__count">
-            {projects.length.toString().padStart(2, "0")} Projects
+            Daily Edit / {DAILY_PROJECT_LIMIT.toString().padStart(2, "0")}
           </span>
         </div>
 
-        <div className="projects__list">
-          {projects.map((project) => (
-            <Link
-              href={`/projects/${project.slug}`}
-              className="project-row"
-              key={project.number}
-              data-project={project.number}
-              data-cursor="VIEW"
-              onMouseEnter={() => {
-                setActiveProject(project);
-
-                if (previewRef.current) {
-                  showPreview(previewRef.current);
-                }
-              }}
-              onMouseLeave={() => {
-                if (previewRef.current) {
-                  hidePreview(previewRef.current);
-                }
-              }}
-            >
-              <div className="project-row__top">
-                <span className="project-row__number">
-                  {project.number}
-                </span>
-
-                <h3>{project.title}</h3>
-
-                <span className="project-row__year">
-                  {project.year}
-                </span>
-              </div>
-
-              <div className="project-row__bottom">
-                <span>{project.category}</span>
-
-                <div className="project-row__stack">
-                  {project.stack.map((tech) => (
-                    <span key={tech}>{tech}</span>
-                  ))}
-                </div>
-              </div>
-            </Link>
+        <div className="projects__grid">
+          {selectedProjects.map((project, index) => (
+            <ProjectCard
+              project={project}
+              priority={index < 2}
+              key={project.slug}
+            />
           ))}
-        </div>
-      </div>
 
-      <div
-        ref={previewRef}
-        className={`project-preview project-preview--${
-          activeProject?.preview ?? "desktop"
-        }`}
-        aria-hidden="true"
-      >
-        {activeProject && (
-          <Image
-            key={activeProject.slug}
-            src={activeProject.image}
-            alt=""
-            fill
-            sizes={activeProject.preview === "mobile" ? "200px" : "360px"}
-          />
-        )}
+        </div>
+
+        <div className="projects__footer">
+          <p>
+            A rotating edit of product, platform, and mobile work. The selection
+            refreshes every day.
+          </p>
+
+          <div className="projects__footer-actions">
+            <span className="projects__footer-note">Updated daily / WIB</span>
+
+            <Link
+              href="/projects"
+              className="projects__explore"
+              data-cursor="OPEN"
+            >
+              <span>Explore all projects</span>
+              <span aria-hidden="true">↗</span>
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   );

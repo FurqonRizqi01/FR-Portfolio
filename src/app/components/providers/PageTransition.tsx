@@ -3,6 +3,7 @@
 import { useLayoutEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import gsap from "gsap";
+import { getLenis } from "@/components/providers/SmoothScroll";
 
 export default function PageTransition() {
   const pathname = usePathname();
@@ -10,10 +11,22 @@ export default function PageTransition() {
 
   useLayoutEffect(() => {
     const body = document.body;
+    const resetScroll = () => {
+      const lenis = getLenis();
+
+      lenis?.scrollTo(0, {
+        immediate: true,
+        force: true,
+      });
+      window.scrollTo(0, 0);
+    };
+
+    resetScroll();
+    const frame = requestAnimationFrame(resetScroll);
 
     if (document.documentElement.classList.contains("is-loading")) {
       gsap.set(body, { clearProps: "opacity" });
-      return;
+      return () => cancelAnimationFrame(frame);
     }
 
     gsap.killTweensOf(body);
@@ -27,6 +40,8 @@ export default function PageTransition() {
         clearProps: "opacity",
       }
     );
+
+    return () => cancelAnimationFrame(frame);
   }, [pathname]);
 
   useLayoutEffect(() => {
@@ -43,7 +58,7 @@ export default function PageTransition() {
       }
 
       const target = event.target as Element | null;
-      const link = target?.closest<HTMLAnchorElement>("a.project-row");
+      const link = target?.closest<HTMLAnchorElement>("a[data-project-link]");
       const href = link?.getAttribute("href");
 
       if (!link || !href || link.target === "_blank") return;

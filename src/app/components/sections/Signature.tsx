@@ -36,7 +36,7 @@ export default function Signature() {
           />
         </div>
         <p className="signature__name">Muhammad Furqon Rizqi</p>
-        <span className="signature__role">Software Engineer</span>
+        <span className="signature__role">Full-Stack Developer</span>
       </div>
 
       <div className="signature__footer">For Real.</div>

@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "FR Portfolio — Muhammad Furqon Rizqi",
     short_name: "FR Portfolio",
-    description: "Muhammad Furqon Rizqi Software Engineer Portfolio",
+    description: "Muhammad Furqon Rizqi Full-Stack Developer Portfolio",
     start_url: "/",
     display: "standalone",
     background_color: "#080808",

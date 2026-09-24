@@ -15,7 +15,7 @@ export default function Footer() {
 
         <div className="footer__meta">
           <span>Muhammad Furqon Rizqi</span>
-          <span>Software Engineer / Full-Stack Developer</span>
+          <span>Full-Stack Developer</span>
         </div>
 
         <div className="footer__bottom">

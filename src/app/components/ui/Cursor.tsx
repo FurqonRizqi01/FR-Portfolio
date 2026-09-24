@@ -21,12 +21,12 @@ export default function Cursor() {
     });
 
     const moveX = gsap.quickTo(cursor, "x", {
-      duration: 0.4,
-      ease: "power3.out",
+      duration: 0.12,
+      ease: "power2.out",
     });
     const moveY = gsap.quickTo(cursor, "y", {
-      duration: 0.4,
-      ease: "power3.out",
+      duration: 0.12,
+      ease: "power2.out",
     });
     let isVisible = false;
 

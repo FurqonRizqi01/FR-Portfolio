@@ -16,7 +16,7 @@ export default function Header() {
           />
         </Link>
 
-        <nav className="header__nav">
+        <nav className="header__nav" aria-label="Primary navigation">
           <a href="#projects" data-cursor="OPEN">Projects</a>
           <a href="#profile" data-cursor="OPEN">Profile</a>
           <a href="#contact" data-cursor="OPEN">Contact</a>
