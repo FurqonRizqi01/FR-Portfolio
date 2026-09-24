@@ -130,7 +130,7 @@ export const projects = [
       "Responsive UI",
     ],
     // Replace these placeholder URLs with the real repository and deployment.
-    githubUrl: "https://github.com/your-username/movie-app",
+    githubUrl: "https://github.com/FurqonRizqi01/PemrogramanFrontend/tree/MovieApps/Movie-Apps",
     liveUrl: "https://movie-app-lime-delta-97.vercel.app/",
   },
 ] satisfies Project[];
